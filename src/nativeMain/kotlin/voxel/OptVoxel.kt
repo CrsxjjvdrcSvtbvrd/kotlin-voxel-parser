@@ -514,6 +514,204 @@ class OptVoxel (
             return buff
         }
     }
+
+
+    fun buildArray(): Pair<FloatArray, IntArray> {
+        val vertices = mutableListOf<Float>()
+        val s1 = Int3(size.x+1,size.y+1,size.z+1)
+        val vertIndex = mutableMapOf<String, Int>()
+        val indices = mutableListOf<Int>()
+        val b0: Byte = 0
+        var nv = 0
+        for(x in 0 until size.x) {
+            for (y in 0 until size.y) {
+                for (z in 0 until size.z) {
+                    if(tops[size[x,y,z]]!=b0) {
+                        val c = tops[size[x,y,z]].toInt() and 0xFF
+                        val (r,g,b) = rgbf(c)
+                        val p1 = s1[x,y+1,z]
+                        val p2 = s1[x+1,y+1,z]
+                        val p3 = s1[x,y+1,z+1]
+                        val p4 = s1[x+1,y+1,z+1]
+                        if(vertIndex[0,p1,c]==-1){
+                            vertices.add(x,y+1,z,0,1,0,r,g,b,1f)
+                            vertIndex[0,p1,c] = nv++
+                        }
+                        if(vertIndex[0,p2,c]==-1){
+                            vertices.add(x+1,y+1,z,0,1,0,r,g,b,1f)
+                            vertIndex[0,p2,c] = nv++
+                        }
+                        if(vertIndex[0,p3,c]==-1){
+                            vertices.add(x,y+1,z+1,0,1,0,r,g,b,1f)
+                            vertIndex[0,p3,c] = nv++
+                        }
+                        if(vertIndex[0,p4,c]==-1){
+                            vertices.add(x+1,y+1,z+1,0,1,0,r,g,b,1f)
+                            vertIndex[0,p4,c] = nv++
+                        }
+                        indices.add(vertIndex[0,p1,c])
+                        indices.add(vertIndex[0,p2,c])
+                        indices.add(vertIndex[0,p3,c])
+                        indices.add(vertIndex[0,p2,c])
+                        indices.add(vertIndex[0,p4,c])
+                        indices.add(vertIndex[0,p3,c])
+                    }
+                    if(bottoms[size[x,y,z]]!=b0) {
+                        val c = bottoms[size[x,y,z]].toInt() and 0xFF
+                        val (r,g,b) = rgbf(c)
+                        val p1 = s1[x,y,z]
+                        val p2 = s1[x+1,y,z]
+                        val p3 = s1[x,y,z+1]
+                        val p4 = s1[x+1,y,z+1]
+                        if(vertIndex[1,p1,c]==-1){
+                            vertices.add(x,y,z,0,-1,0,r,g,b,1f)
+                            vertIndex[1,p1,c] = nv++
+                        }
+                        if(vertIndex[1,p2,c]==-1){
+                            vertices.add(x+1,y,z,0,-1,0,r,g,b,1f)
+                            vertIndex[1,p2,c] = nv++
+                        }
+                        if(vertIndex[1,p3,c]==-1){
+                            vertices.add(x,y,z+1,0,-1,0,r,g,b,1f)
+                            vertIndex[1,p3,c] = nv++
+                        }
+                        if(vertIndex[1,p4,c]==-1){
+                            vertices.add(x+1,y,z+1,0,-1,0,r,g,b,1f)
+                            vertIndex[1,p4,c] = nv++
+                        }
+                        indices.add(vertIndex[1,p1,c])
+                        indices.add(vertIndex[1,p2,c])
+                        indices.add(vertIndex[1,p3,c])
+                        indices.add(vertIndex[1,p2,c])
+                        indices.add(vertIndex[1,p4,c])
+                        indices.add(vertIndex[1,p3,c])
+                    }
+                    if(lefts[size[x,y,z]]!=b0) {
+                        val c = lefts[size[x,y,z]].toInt() and 0xFF
+                        val (r,g,b) = rgbf(c)
+                        val p1 = s1[x,y+1,z]
+                        val p2 = s1[x,y+1,z+1]
+                        val p3 = s1[x,y,z]
+                        val p4 = s1[x,y,z+1]
+                        if(vertIndex[2,p1,c]==-1){
+                            vertices.add(x,y+1,z,-1,0,0,r,g,b,1f)
+                            vertIndex[2,p1,c] = nv++
+                        }
+                        if(vertIndex[2,p2,c]==-1){
+                            vertices.add(x,y+1,z+1,-1,0,0,r,g,b,1f)
+                            vertIndex[2,p2,c] = nv++
+                        }
+                        if(vertIndex[2,p3,c]==-1){
+                            vertices.add(x,y,z,-1,0,0,r,g,b,1f)
+                            vertIndex[2,p3,c] = nv++
+                        }
+                        if(vertIndex[2,p4,c]==-1){
+                            vertices.add(x,y,z+1,-1,0,0,r,g,b,1f)
+                            vertIndex[2,p4,c] = nv++
+                        }
+                        indices.add(vertIndex[2,p1,c])
+                        indices.add(vertIndex[2,p2,c])
+                        indices.add(vertIndex[2,p3,c])
+                        indices.add(vertIndex[2,p2,c])
+                        indices.add(vertIndex[2,p4,c])
+                        indices.add(vertIndex[2,p3,c])
+                    }
+                    if(rights[size[x,y,z]]!=b0) {
+                        val c = rights[size[x,y,z]].toInt() and 0xFF
+                        val (r,g,b) = rgbf(c)
+                        val p1 = s1[x+1,y+1,z]
+                        val p2 = s1[x+1,y+1,z+1]
+                        val p3 = s1[x+1,y,z]
+                        val p4 = s1[x+1,y,z+1]
+                        if(vertIndex[3,p1,c]==-1){
+                            vertices.add(x+1,y+1,z,1,0,0,r,g,b,1f)
+                            vertIndex[3,p1,c] = nv++
+                        }
+                        if(vertIndex[3,p2,c]==-1){
+                            vertices.add(x+1,y+1,z+1,1,0,0,r,g,b,1f)
+                            vertIndex[3,p2,c] = nv++
+                        }
+                        if(vertIndex[3,p3,c]==-1){
+                            vertices.add(x+1,y,z,1,0,0,r,g,b,1f)
+                            vertIndex[3,p3,c] = nv++
+                        }
+                        if(vertIndex[3,p4,c]==-1){
+                            vertices.add(x+1,y,z+1,1,0,0,r,g,b,1f)
+                            vertIndex[3,p4,c] = nv++
+                        }
+                        indices.add(vertIndex[3,p1,c])
+                        indices.add(vertIndex[3,p2,c])
+                        indices.add(vertIndex[3,p3,c])
+                        indices.add(vertIndex[3,p2,c])
+                        indices.add(vertIndex[3,p4,c])
+                        indices.add(vertIndex[3,p3,c])
+                    }
+                    if(fronts[size[x,y,z]]!=b0) {
+                        val c = fronts[size[x,y,z]].toInt() and 0xFF
+                        val (r,g,b) = rgbf(c)
+                        val p1 = s1[x,y+1,z+1]
+                        val p2 = s1[x+1,y+1,z+1]
+                        val p3 = s1[x,y,z+1]
+                        val p4 = s1[x+1,y,z+1]
+                        if(vertIndex[4,p1,c]==-1){
+                            vertices.add(x,y+1,z+1,0,0,1,r,g,b,1f)
+                            vertIndex[4,p1,c] = nv++
+                        }
+                        if(vertIndex[4,p2,c]==-1){
+                            vertices.add(x+1,y+1,z+1,0,0,1,r,g,b,1f)
+                            vertIndex[4,p2,c] = nv++
+                        }
+                        if(vertIndex[4,p3,c]==-1){
+                            vertices.add(x,y,z+1,0,0,1,r,g,b,1f)
+                            vertIndex[4,p3,c] = nv++
+                        }
+                        if(vertIndex[4,p4,c]==-1){
+                            vertices.add(x+1,y,z+1,0,0,1,r,g,b,1f)
+                            vertIndex[4,p4,c] = nv++
+                        }
+                        indices.add(vertIndex[4,p1,c])
+                        indices.add(vertIndex[4,p2,c])
+                        indices.add(vertIndex[4,p3,c])
+                        indices.add(vertIndex[4,p2,c])
+                        indices.add(vertIndex[4,p4,c])
+                        indices.add(vertIndex[4,p3,c])
+                    }
+                    if(backs[size[x,y,z]]!=b0) {
+                        val c = backs[size[x,y,z]].toInt() and 0xFF
+                        val (r,g,b) = rgbf(c)
+                        val p1 = s1[x,y+1,z]
+                        val p2 = s1[x+1,y+1,z]
+                        val p3 = s1[x,y,z]
+                        val p4 = s1[x+1,y,z]
+                        if(vertIndex[5,p1,c]==-1){
+                            vertices.add(x,y+1,z,0,0,-1,r,g,b,1f)
+                            vertIndex[5,p1,c] = nv++
+                        }
+                        if(vertIndex[5,p2,c]==-1){
+                            vertices.add(x+1,y+1,z,0,0,-1,r,g,b,1f)
+                            vertIndex[5,p2,c] = nv++
+                        }
+                        if(vertIndex[5,p3,c]==-1){
+                            vertices.add(x,y,z,0,0,-1,r,g,b,1f)
+                            vertIndex[5,p3,c] = nv++
+                        }
+                        if(vertIndex[5,p4,c]==-1){
+                            vertices.add(x+1,y,z,0,0,-1,r,g,b,1f)
+                            vertIndex[5,p4,c] = nv++
+                        }
+                        indices.add(vertIndex[5,p1,c])
+                        indices.add(vertIndex[5,p2,c])
+                        indices.add(vertIndex[5,p3,c])
+                        indices.add(vertIndex[5,p2,c])
+                        indices.add(vertIndex[5,p4,c])
+                        indices.add(vertIndex[5,p3,c])
+                    }
+                }
+            }
+        }
+        println("顶点数:${vertices.size},索引数:${indices.size},点数:${vertices.size/10},面数:${indices.size/3}")
+        return vertices.toFloatArray() to indices.toIntArray()
+    }
 }
 fun MutableList<Float>.add(x: Int,y: Int,z: Int,nx: Int,ny: Int,nz: Int,r: Float,g: Float,b: Float,a: Float): MutableList<Float> {
     this.add(x,y,z,nx,ny,nz).add(r,g,b,a)

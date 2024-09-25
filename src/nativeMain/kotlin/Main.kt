@@ -5,6 +5,7 @@ import okio.FileSystem
 import okio.Path.Companion.toPath
 import okio.buffer
 import voxel.VoxelLoader
+import voxel.convertPly
 
 @Serializable
 data class Mesh (
@@ -14,6 +15,7 @@ data class Mesh (
 
 // -i input -o output [-t type:txt|json|ply]
 fun main(args: Array<String>) {
+
     if (args.isEmpty()) {
         println(
             """
@@ -63,9 +65,13 @@ fun main(args: Array<String>) {
                             val (v, i) = c.optimization().buildMesh()
                             io.write(PrettyPrintJson.encodeToString(Mesh(v, i)).encodeToByteArray())
                         } else if (type == 2) {
-                            io.write(c.optimization().exportPly())
+                            val (v,i) = c.optimization().buildArray()
+                            io.write(convertPly(v,i))
+//                            io.write(c.optimization().exportPly())
                         } else if (type == 3) {
-                            io.write(c.optimization().exportPly(true))
+                            val (v,i) = c.optimization().buildArray()
+                            io.write(convertPly(v,i, true))
+//                            io.write(c.optimization().exportPly(true))
                         }
                     }
                     io.flush()
