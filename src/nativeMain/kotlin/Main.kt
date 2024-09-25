@@ -66,7 +66,7 @@ fun main(args: Array<String>) {
                             io.write(PrettyPrintJson.encodeToString(Mesh(v, i)).encodeToByteArray())
                         } else if (type == 2) {
                             val (v,i) = c.optimization().buildArray()
-                            io.write(convertPly(v,i))
+                            io.write(convertPly(v,i, binary = false))
 //                            io.write(c.optimization().exportPly())
                         } else if (type == 3) {
                             val (v,i) = c.optimization().buildArray()

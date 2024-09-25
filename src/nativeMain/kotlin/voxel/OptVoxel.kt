@@ -559,24 +559,28 @@ class OptVoxel (
                     if(bottoms[size[x,y,z]]!=b0) {
                         val c = bottoms[size[x,y,z]].toInt() and 0xFF
                         val (r,g,b) = rgbf(c)
-                        val p1 = s1[x,y,z]
-                        val p2 = s1[x+1,y,z]
-                        val p3 = s1[x,y,z+1]
-                        val p4 = s1[x+1,y,z+1]
+//                        val p1 = s1[x,y,z]
+//                        val p2 = s1[x+1,y,z]
+//                        val p3 = s1[x,y,z+1]
+//                        val p4 = s1[x+1,y,z+1]
+                        val p1 = s1[x,y,z+1]
+                        val p2 = s1[x+1,y,z+1]
+                        val p3 = s1[x,y,z]
+                        val p4 = s1[x+1,y,z]
                         if(vertIndex[1,p1,c]==-1){
-                            vertices.add(x,y,z,0,-1,0,r,g,b,1f)
+                            vertices.add(x,y,z+1,0,-1,0,r,g,b,1f)
                             vertIndex[1,p1,c] = nv++
                         }
                         if(vertIndex[1,p2,c]==-1){
-                            vertices.add(x+1,y,z,0,-1,0,r,g,b,1f)
+                            vertices.add(x+1,y,z+1,0,-1,0,r,g,b,1f)
                             vertIndex[1,p2,c] = nv++
                         }
                         if(vertIndex[1,p3,c]==-1){
-                            vertices.add(x,y,z+1,0,-1,0,r,g,b,1f)
+                            vertices.add(x,y,z,0,-1,0,r,g,b,1f)
                             vertIndex[1,p3,c] = nv++
                         }
                         if(vertIndex[1,p4,c]==-1){
-                            vertices.add(x+1,y,z+1,0,-1,0,r,g,b,1f)
+                            vertices.add(x+1,y,z,0,-1,0,r,g,b,1f)
                             vertIndex[1,p4,c] = nv++
                         }
                         indices.add(vertIndex[1,p1,c])
@@ -619,24 +623,28 @@ class OptVoxel (
                     if(rights[size[x,y,z]]!=b0) {
                         val c = rights[size[x,y,z]].toInt() and 0xFF
                         val (r,g,b) = rgbf(c)
-                        val p1 = s1[x+1,y+1,z]
-                        val p2 = s1[x+1,y+1,z+1]
-                        val p3 = s1[x+1,y,z]
-                        val p4 = s1[x+1,y,z+1]
+//                        val p1 = s1[x+1,y+1,z]
+//                        val p2 = s1[x+1,y+1,z+1]
+//                        val p3 = s1[x+1,y,z]
+//                        val p4 = s1[x+1,y,z+1]
+                        val p1 = s1[x+1,y+1,z+1]
+                        val p2 = s1[x+1,y+1,z]
+                        val p3 = s1[x+1,y,z+1]
+                        val p4 = s1[x+1,y,z]
                         if(vertIndex[3,p1,c]==-1){
-                            vertices.add(x+1,y+1,z,1,0,0,r,g,b,1f)
+                            vertices.add(x+1,y+1,z+1,1,0,0,r,g,b,1f)
                             vertIndex[3,p1,c] = nv++
                         }
                         if(vertIndex[3,p2,c]==-1){
-                            vertices.add(x+1,y+1,z+1,1,0,0,r,g,b,1f)
+                            vertices.add(x+1,y+1,z,1,0,0,r,g,b,1f)
                             vertIndex[3,p2,c] = nv++
                         }
                         if(vertIndex[3,p3,c]==-1){
-                            vertices.add(x+1,y,z,1,0,0,r,g,b,1f)
+                            vertices.add(x+1,y,z+1,1,0,0,r,g,b,1f)
                             vertIndex[3,p3,c] = nv++
                         }
                         if(vertIndex[3,p4,c]==-1){
-                            vertices.add(x+1,y,z+1,1,0,0,r,g,b,1f)
+                            vertices.add(x+1,y,z,1,0,0,r,g,b,1f)
                             vertIndex[3,p4,c] = nv++
                         }
                         indices.add(vertIndex[3,p1,c])
@@ -679,24 +687,28 @@ class OptVoxel (
                     if(backs[size[x,y,z]]!=b0) {
                         val c = backs[size[x,y,z]].toInt() and 0xFF
                         val (r,g,b) = rgbf(c)
-                        val p1 = s1[x,y+1,z]
-                        val p2 = s1[x+1,y+1,z]
-                        val p3 = s1[x,y,z]
-                        val p4 = s1[x+1,y,z]
+//                        val p1 = s1[x,y+1,z]
+//                        val p2 = s1[x+1,y+1,z]
+//                        val p3 = s1[x,y,z]
+//                        val p4 = s1[x+1,y,z]
+                        val p1 = s1[x+1,y+1,z]
+                        val p2 = s1[x,y+1,z]
+                        val p3 = s1[x+1,y,z]
+                        val p4 = s1[x,y,z]
                         if(vertIndex[5,p1,c]==-1){
-                            vertices.add(x,y+1,z,0,0,-1,r,g,b,1f)
+                            vertices.add(x+1,y+1,z,0,0,-1,r,g,b,1f)
                             vertIndex[5,p1,c] = nv++
                         }
                         if(vertIndex[5,p2,c]==-1){
-                            vertices.add(x+1,y+1,z,0,0,-1,r,g,b,1f)
+                            vertices.add(x,y+1,z,0,0,-1,r,g,b,1f)
                             vertIndex[5,p2,c] = nv++
                         }
                         if(vertIndex[5,p3,c]==-1){
-                            vertices.add(x,y,z,0,0,-1,r,g,b,1f)
+                            vertices.add(x+1,y,z,0,0,-1,r,g,b,1f)
                             vertIndex[5,p3,c] = nv++
                         }
                         if(vertIndex[5,p4,c]==-1){
-                            vertices.add(x+1,y,z,0,0,-1,r,g,b,1f)
+                            vertices.add(x,y,z,0,0,-1,r,g,b,1f)
                             vertIndex[5,p4,c] = nv++
                         }
                         indices.add(vertIndex[5,p1,c])

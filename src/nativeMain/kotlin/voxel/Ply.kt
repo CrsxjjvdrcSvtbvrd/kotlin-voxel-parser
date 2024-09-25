@@ -50,13 +50,10 @@ data class Quad(
 ) {
     fun canMerge(oth: Quad): Int {
         return if (a == oth.c && b == oth.d) 1
-//        else if (a == oth.d && b == oth.c) 1
         else if (b == oth.a && d == oth.c) 2
-//        else if (b == oth.c && d == oth.a) 2
         else if (c == oth.a && d == oth.b) 3
-//        else if (c == oth.b && d == oth.a) 3
         else if (a == oth.b && c == oth.d) 4
-//        else if (a == oth.d && c == oth.b) 4
+        else if (d == oth.b && c == oth.a) 5
         else 0
     }
     fun merge(oth: Quad, method: Int): Quad {
@@ -64,7 +61,13 @@ data class Quad(
             1 -> Quad(oth.a, oth.b, c, d)
             2 -> Quad(a, oth.b, c, oth.d)
             3 -> Quad(a, b, oth.c, oth.d)
-            4 -> Quad(oth.a, b, c, oth.d)
+//            4 -> Quad(oth.a, b, c, oth.d)
+            4 -> Quad(oth.a, b, oth.c, d)
+            5 -> Quad(a, b, oth.c, oth.d)
+//            5 -> Quad(oth.a, d, oth.c, d)
+//            6 -> Quad(a, oth.d, c, oth.b)
+//            7 -> Quad(oth.a, d, oth.c ,b)
+//            8 -> Quad(a, oth.d, c, oth.b)
             else -> this
         }
     }
